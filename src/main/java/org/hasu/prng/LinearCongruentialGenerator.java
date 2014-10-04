@@ -2,6 +2,8 @@ package org.hasu.prng;
 
 import java.math.BigInteger;
 
+import static java.math.BigInteger.valueOf;
+
 /**
  * Bad random number generator
  */
@@ -13,7 +15,19 @@ public class LinearCongruentialGenerator implements Prng {
     private BigInteger s;
 
     /**
-     * Creates a linear congruential PRNG.
+     * Creates a linear congruential PRNG with integer parameters.
+     *
+     * @param seed    the initial value s0
+     * @param a       first secret parameter for the PRNG
+     * @param b       second secret parameter for the PRNG
+     * @param modulus modulus of the generator
+     */
+    public LinearCongruentialGenerator(long seed, long a, long b, long modulus) {
+        this(valueOf(seed), valueOf(a), valueOf(b), valueOf(modulus));
+    }
+
+    /**
+     * Creates a linear congruential PRNG with BigInteger parameters.
      *
      * @param seed    the initial value s0
      * @param a       first secret parameter for the PRNG
@@ -38,5 +52,15 @@ public class LinearCongruentialGenerator implements Prng {
                 .add(b)
                 .mod(modulus);
         return s;
+    }
+
+    /**
+     * Returns the size of the modulus - 1 in bits.
+     *
+     * @return the size of the modulus - 1
+     */
+    @Override
+    public int getOutputLen() {
+        return modulus.subtract(BigInteger.ONE).bitLength();
     }
 }

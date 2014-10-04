@@ -12,4 +12,11 @@ public interface Prng {
      * @return the random number
      */
     BigInteger getNext();
+
+    /**
+     * Returns the output length of the PRNG in bits.
+     *
+     * @return the output length in bits
+     */
+    int getOutputLen();
 }
